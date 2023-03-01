@@ -4,10 +4,14 @@ import { StyledCartProductList } from './style';
 import { StyledButton } from '../../../styles/button';
 import { StyledParagraph } from '../../../styles/typography';
 
-const CartProductList = () => (
-  <StyledCartProductList>
+const CartProductList = () => {
+
+  console.log("tes")
+  
+  return(
+    <StyledCartProductList>
     <ul>
-      <CartProductCard />
+      {/* <CartProductCard /> */}
     </ul>
 
     <div className='totalBox'>
@@ -20,6 +24,8 @@ const CartProductList = () => (
       Remover todos
     </StyledButton>
   </StyledCartProductList>
-);
+  )
+}
+
 
 export default CartProductList;
