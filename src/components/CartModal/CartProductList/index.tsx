@@ -8,28 +8,40 @@ import { StyledParagraph } from '../../../styles/typography';
 import { CartContext } from '../../../providers/CartContext';
 
 const CartProductList = () => {
+  const { clearCart, currentSale, totalCart } = useContext(CartContext);
 
-  const { clearCart, currentSale } = useContext(CartContext)
-
-  return(
+  return (
     <StyledCartProductList>
-    <ul>
-        {currentSale.map((produtc) => (< CartProductCard key={produtc.id} product={produtc}/>))}
-    </ul>
+      <ul>
+        {currentSale.map((produtc) => (
+          <CartProductCard key={produtc.id} product={produtc} />
+        ))}
+      </ul>
 
-    <div className='totalBox'>
-      <StyledParagraph>
-        <strong>Total</strong>
-      </StyledParagraph>
-      <StyledParagraph className='total'>R$ 14,00</StyledParagraph>
-    </div>
-    
-    <StyledButton $buttonSize='default' $buttonStyle='gray' type='button' onClick={() => clearCart()}>
-      Remover todos
-    </StyledButton>
-  </StyledCartProductList>
-  )
-}
-
+      <div className='totalBox'>
+        <StyledParagraph>
+          <strong>Total</strong>
+        </StyledParagraph>
+        <StyledParagraph className='total'>
+          {totalCart.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          })}
+        </StyledParagraph>
+      </div>
+      <StyledButton
+        $buttonSize='default'
+        $buttonStyle='gray'
+        type='button'
+        onClick={() => clearCart()}
+      >
+        Remover todos
+      </StyledButton>
+      <StyledButton $buttonSize='default' $buttonStyle='green' type='button' className='btnFinalize'>
+        Finalizar Compra
+      </StyledButton>
+    </StyledCartProductList>
+  );
+};
 
 export default CartProductList;

@@ -12,6 +12,21 @@ export const StyledCartProductList = styled.div`
       height: 200px;
       overflow: auto;
    }
+   
+   ul::-webkit-scrollbar {
+        width: 7.5px;
+    }
+
+    /* Track */
+    ul::-webkit-scrollbar-track {
+        background: ${({theme}) => theme.colors.gray100};
+    }
+
+    /* Handle */
+    ul::-webkit-scrollbar-thumb {
+        background: ${({theme}) => theme.colors.primary};
+        border-radius: 4px;
+    }
 
    .totalBox {
       padding: 20px 0;
@@ -24,5 +39,9 @@ export const StyledCartProductList = styled.div`
          font-weight: 700;
          color: ${({ theme }) => theme.colors.gray300};
       }
+   }
+
+   .btnFinalize{
+      margin-top: 10px;
    }
 `;

@@ -10,6 +10,21 @@ export const GlobalStyles = createGlobalStyle`
     text-decoration: none;
   }
 
+  body::-webkit-scrollbar {
+        width: 7.5px;
+    }
+
+    /* Track */
+    body::-webkit-scrollbar-track {
+        background: ${({theme}) => theme.colors.gray100};
+    }
+
+    /* Handle */
+    body::-webkit-scrollbar-thumb {
+        background: ${({theme}) => theme.colors.primary};
+        border-radius: 4px;
+    }
+
   button{
     cursor: pointer;
   }

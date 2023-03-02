@@ -3,7 +3,7 @@ import BaseTitle from './components/BaseTitle';
 
 interface IStyledTitleProps {
   $fontSize: 'one' | 'two' | 'three' | 'four';
-  textAlign?: 'center' | 'left' | 'right';
+  textAlign?: 'center' | 'left' | 'right' ;
 }
 
 interface IStyledParagraphProps {

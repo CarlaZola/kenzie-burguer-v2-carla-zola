@@ -27,10 +27,25 @@ export const StyledHeader = styled.header`
           background: transparent;
           color: ${({ theme }) => theme.colors.gray150};
           transition: 0.3s;
+          position: relative;
 
           :hover {
             color: ${({ theme }) => theme.colors.gray300};
           }
+        }
+        .counter{
+          position: absolute;
+          top: -10px;
+          right: -5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 20px;
+          height: 20px;
+          background-color: ${({ theme }) => theme.colors.primary};
+          clip-path: circle();
+          color: ${({ theme }) => theme.colors.white};
+          font-weight: 700;
         }
       }
     }

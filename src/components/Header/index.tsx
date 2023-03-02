@@ -12,7 +12,7 @@ import { UserContext } from '../../providers/UserContext';
 
 const Header = () => {
 
-  const { openModal,  } = useContext(CartContext)
+  const { openModal, totalItemsInCart} = useContext(CartContext)
   const { userLogout } = useContext(UserContext)
 
   return(
@@ -34,6 +34,7 @@ const Header = () => {
               }}
             >
               <MdShoppingCart size={28} />
+              {totalItemsInCart ? <div className='counter'>{totalItemsInCart}</div> : null}          
             </button>
             <button type='button'>
               <MdLogout size={28} onClick={() => userLogout()}/>

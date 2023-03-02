@@ -31,6 +31,7 @@ export interface ICartContext{
     currentSale: IProduct,
     searchProducts: ISearchProduct,
     showModal: boolean,
+    itemName: string
     openModal: () => void,
     closeModal: () => void,
     addProductsInCart: (product: Product) => void,
@@ -41,7 +42,10 @@ export interface ICartContext{
     itemTotal: (item: Product) => number
     totalCart: number,
     totalItemsInCart: number,
-    selectedItems: (data: ISearch) => void    
+    selectedItems: (data: ISearch) => void
+    setItemName: (value: React.SetStateAction<string>) => void,
+    clearSearch: () => void
+    
 }
 
 
@@ -55,6 +59,7 @@ export const CartProvider = ({children}: IDefaultProviderProps) => {
     const [searchProducts, setSeachProducts] = useState<ISearchProduct>(null)
     const [showModal, setShowModal] = useState(false)
     const [currentSale, setCurrentSale] = useState<IProduct>(productsInCartLocalStorage ? JSON.parse(productsInCartLocalStorage) : [])
+    const [itemName, setItemName] = useState<string>("")
 
     useEffect(() => {
         const getProducst = async() => {
@@ -181,6 +186,13 @@ export const CartProvider = ({children}: IDefaultProviderProps) => {
     const selectedItems = (data: ISearch) => {
         const items = products?.filter((product) => product.name.toLowerCase().includes(data.product.trim().toLowerCase()) || product.category.toLowerCase().includes(data.product.trim().toLowerCase()))
         setSeachProducts(items)   
+        
+        setItemName(data.product)
+    }
+
+    const clearSearch = () => {
+        setSeachProducts(products)
+        setItemName('')
     }
 
     return(
@@ -199,7 +211,11 @@ export const CartProvider = ({children}: IDefaultProviderProps) => {
             totalCart,
             totalItemsInCart,
             searchProducts,
-            selectedItems
+            selectedItems,
+            itemName, 
+            setItemName,
+            clearSearch
+            
         }}>
             {children}
         </CartContext.Provider>
