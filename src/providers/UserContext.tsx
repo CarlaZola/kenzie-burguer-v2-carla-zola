@@ -1,5 +1,8 @@
-import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+
+import { createContext, useEffect, useState } from "react";
+
 import { api } from "../services/api";
 
 
@@ -44,8 +47,6 @@ export const UserContext = createContext({} as IUsercontext)
 
 export const UserProvider = ({children}: IDefaultProviderProps) => {
 
-    // const token = localStorage.getItem("@token")
-
     const [user, setUser] = useState<IUser | null>(null)
 
     const navigate = useNavigate()
@@ -76,12 +77,19 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
     const userRegister = async(dataRegister: IUserRegisterForm) => {
             try{
                 await api.post("/users", dataRegister)              
-                navigate('/')
-                // setUser(response.data.user)
-                // localStorage.setItem("@token", response.data.accessToken)
+                toast.success("Conta criada com sucesso!", {
+                    hideProgressBar: true,
+                    autoClose: 500,
+                  });
+                  setTimeout(() => {
+                    navigate(`/`);
+                  }, 1000);
             }
             catch(error){
-                console.log(error)
+                toast.error("Esse email já foi cadastrado!", {
+                    hideProgressBar: true,
+                    autoClose: 1000,
+                  });
             }
     }
 
@@ -94,14 +102,18 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
             navigate('/shop')
         }
         catch(error){
-            console.log(error)
+            toast.error("Email ou senha incorretos", {
+                hideProgressBar: true,
+                autoClose: 1000,
+              });
         }
     }   
 
     const userLogout = () => {
         setUser(null)
-        localStorage.remove("@token")
-        localStorage.remove("@id")
+        localStorage.removeItem("@token")
+        localStorage.removeItem("@id")
+        localStorage.removeItem("@productsInCart")       
         navigate("/")
     }
 

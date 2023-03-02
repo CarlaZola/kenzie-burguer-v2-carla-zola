@@ -1,17 +1,20 @@
-import CartProductCard from './CartProductCard';
+import { useContext } from 'react';
 
+import CartProductCard from './CartProductCard';
 import { StyledCartProductList } from './style';
 import { StyledButton } from '../../../styles/button';
 import { StyledParagraph } from '../../../styles/typography';
 
+import { CartContext } from '../../../providers/CartContext';
+
 const CartProductList = () => {
 
-  console.log("tes")
-  
+  const { clearCart, currentSale } = useContext(CartContext)
+
   return(
     <StyledCartProductList>
     <ul>
-      {/* <CartProductCard /> */}
+        {currentSale.map((produtc) => (< CartProductCard key={produtc.id} product={produtc}/>))}
     </ul>
 
     <div className='totalBox'>
@@ -20,7 +23,8 @@ const CartProductList = () => {
       </StyledParagraph>
       <StyledParagraph className='total'>R$ 14,00</StyledParagraph>
     </div>
-    <StyledButton $buttonSize='default' $buttonStyle='gray'>
+    
+    <StyledButton $buttonSize='default' $buttonStyle='gray' type='button' onClick={() => clearCart()}>
       Remover todos
     </StyledButton>
   </StyledCartProductList>

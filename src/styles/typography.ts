@@ -20,6 +20,7 @@ export const StyledTitle = styled(BaseTitle)<IStyledTitleProps>`
   text-align: ${({ textAlign }) => textAlign};
 
   ${({ $fontSize }) => {
+
     switch ($fontSize) {
       case 'one':
         return css`

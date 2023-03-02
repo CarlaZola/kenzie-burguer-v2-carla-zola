@@ -30,13 +30,13 @@ const LoginForm = () => {
       <Input 
         type='text'
         label='Email'
-        {...register('email')}
+        register={register('email')}
         error={errors.email}
       />
       <Input 
         type='password'
-        label='Email'
-        {...register('password')}
+        label='Senha'
+        register={register('password')}
         error={errors.password}
       />
       <StyledButton $buttonSize='default' $buttonStyle='green'>

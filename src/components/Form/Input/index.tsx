@@ -1,27 +1,24 @@
-import { FieldError } from 'react-hook-form';
-import { forwardRef, InputHTMLAttributes } from 'react';
+import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+
+import { InputHTMLAttributes } from 'react';
 import { StyledFieldset } from './style';
 import { StyledTextField } from '../../../styles/form';
 import { StyledParagraph } from '../../../styles/typography';
 
-
-
-interface IInputProps extends InputHTMLAttributes<HTMLInputElement>{
-  type: 'text' | 'password',
-  label: string
-  error?: FieldError | undefined
+interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  type: 'text' | 'password';
+  label: string;
+  error?: FieldError | undefined;
+  register: UseFormRegisterReturn<string>;
 }
 
-const Input = forwardRef<HTMLInputElement, IInputProps>(({label, type, error, ...rest}, ref) => {
-
-  console.log("teste")
-
- return(
-      <StyledFieldset>
-        <StyledTextField label={label} type={type} {...rest} ref={ref}/>
-        {error ? <StyledParagraph fontColor='red'>{error.message}</StyledParagraph> : null}
-      </StyledFieldset>
-    )
-});
+const Input = ({ label, type, error, register }: IInputProps) => (
+  <StyledFieldset>
+    <StyledTextField label={label} type={type} {...register} />
+    {error ? (
+      <StyledParagraph fontColor='red'>{error.message}</StyledParagraph>
+    ) : null}
+  </StyledFieldset>
+);
 
 export default Input;

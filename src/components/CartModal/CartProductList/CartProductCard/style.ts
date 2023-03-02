@@ -35,6 +35,7 @@ export const StyledCartProductCard = styled.li`
       display: flex;
       justify-content: space-between;
       padding-right: 20px;
+      align-items: center;
       gap: 20px;
 
       button{
@@ -46,5 +47,29 @@ export const StyledCartProductCard = styled.li`
             opacity: .7;
         }
       }
-   }
+
+      .contentPrice{
+         font-weight: 600;
+         color: ${({ theme }) => theme.colors.primary};
+         
+      }
+      .contentQuantitites{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.25rem;
+            height: 2.125rem;
+            border: 1px solid ${({ theme }) => theme.colors.primary};
+            border-radius: .1875rem;
+            width: 4.375rem;
+            cursor: pointer;
+
+            .quantities{
+               font-weight: 600;
+            }
+      }
+
+}
+  
 `;

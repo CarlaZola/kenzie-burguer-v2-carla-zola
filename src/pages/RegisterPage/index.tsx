@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import { StyledRegisterPage } from './style';
 import RegisterForm from '../../components/Form/RegisterForm';
 import IllustrationBox from '../../components/IllustrationBox';
-
 import { StyledContainer, StyledGridBox } from '../../styles/grid';
 import { StyledTitle } from '../../styles/typography';
 
+
 const RegisterPage = () => (
     <StyledRegisterPage>
+       <ToastContainer />
       <StyledContainer>
         <div className='flexGrid'>
           <div className='left'>
