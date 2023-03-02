@@ -91,7 +91,7 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
                   });
                   setTimeout(() => {
                     navigate(`/`);
-                  }, 1000);
+                  }, 1300);
             }
             catch(error){
                 if(axios.isAxiosError(error)){
