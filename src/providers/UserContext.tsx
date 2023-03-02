@@ -1,9 +1,11 @@
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import { createContext, useEffect, useState } from "react";
 
 import { api } from "../services/api";
+
 
 
 
@@ -37,17 +39,18 @@ export interface IDefaultProviderProps{
 
 
 interface IUsercontext{
-    user: IUser | null,
+    user: User | null,
     userRegister: (dataRegister: IUserRegisterForm) => Promise<void>,
     userLogin: (dataLogin: IUserLoginForm) => Promise<void>,
     userLogout: () => void
 }
 
+
 export const UserContext = createContext({} as IUsercontext)
 
 export const UserProvider = ({children}: IDefaultProviderProps) => {
 
-    const [user, setUser] = useState<IUser | null>(null)
+    const [user, setUser] = useState<User | null>(null)
 
     const navigate = useNavigate()
 
@@ -57,7 +60,7 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
             const userLoad = async() => {
                 const token = localStorage.getItem('@token')
                 try{
-                    const response = await api.get(`/users/${id}`, {
+                    const response = await api.get<User>(`/users/${id}`, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
@@ -66,7 +69,12 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
                     navigate('/shop')                   
                 }
                 catch(error){
-                    console.error(error)
+                    if(axios.isAxiosError(error)){
+                       toast.error(`${error.message}`, {
+                            hideProgressBar: true,
+                            autoClose: 500,                     
+                       })
+                    }
                 }
             }
             userLoad()
@@ -76,7 +84,7 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
 
     const userRegister = async(dataRegister: IUserRegisterForm) => {
             try{
-                await api.post("/users", dataRegister)              
+                await api.post<IUser>("/users", dataRegister)              
                 toast.success("Conta criada com sucesso!", {
                     hideProgressBar: true,
                     autoClose: 500,
@@ -86,26 +94,31 @@ export const UserProvider = ({children}: IDefaultProviderProps) => {
                   }, 1000);
             }
             catch(error){
-                toast.error("Esse email já foi cadastrado!", {
-                    hideProgressBar: true,
-                    autoClose: 1000,
-                  });
+                if(axios.isAxiosError(error)){
+                    toast.error("Esse email já foi cadastrado!", {
+                        hideProgressBar: true,
+                        autoClose: 1000,
+                      });
+                }              
             }
     }
 
     const userLogin = async(dataLogin: IUserLoginForm) => {
         try{
-            const response = await api.post("/login", dataLogin)
-            setUser(response.data.user)
+            const response = await api.post<IUser>("/login", dataLogin)
+            
             localStorage.setItem("@token", response.data.accessToken)
-            localStorage.setItem("@id", JSON.stringify(response.data.user.id))          
+            localStorage.setItem("@id", JSON.stringify(response.data.user.id)) 
+            setUser(response.data.user)         
             navigate('/shop')
         }
         catch(error){
-            toast.error("Email ou senha incorretos", {
-                hideProgressBar: true,
-                autoClose: 1000,
-              });
+            if(axios.isAxiosError(error)){
+                toast.error("Email ou senha incorretos", {
+                    hideProgressBar: true,
+                    autoClose: 1000,
+                  });
+            }           
         }
     }   
 

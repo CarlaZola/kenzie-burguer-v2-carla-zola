@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import axios from 'axios';
 /* eslint-disable no-param-reassign */
 
 
@@ -7,6 +8,7 @@ import { createContext, useEffect, useState } from 'react';
 import { IDefaultProviderProps } from './UserContext'
 import { api } from '../services/api';
 import { ISearch } from '../components/Header/SearchForm';
+
 
 
 
@@ -78,7 +80,14 @@ export const CartProvider = ({children}: IDefaultProviderProps) => {
                 setSeachProducts(responseIfQuantities)
             }
             catch(error){
-                console.error(error)
+                if(axios.isAxiosError(error)){
+                    toast.error("Algo saiu errado na busca de produtos :(", {
+                        theme: `colored`,
+                        autoClose: 500,
+                        position: "top-right",
+                        hideProgressBar: true,                      
+                    })
+                }
             }
 
         }
